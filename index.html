@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"/>
+  <meta name="theme-color" content="#0a0a0f"/>
+  <meta name="description" content="2048 with a full RGB color overhaul — PWA for Android"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="2048 RGB"/>
+
+  <title>2048 RGB</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="icon.svg" type="image/svg+xml"/>
+  <link rel="apple-touch-icon" href="icon.svg"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- Header: logo + scores -->
+  <header>
+    <div class="logo">2048</div>
+    <div class="scores">
+      <div class="score-box" id="score-box">
+        <div class="label">Score</div>
+        <div class="value" id="score">0</div>
+      </div>
+      <div class="score-box">
+        <div class="label">Best</div>
+        <div class="value" id="best">0</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Controls bar -->
+  <div class="controls">
+    <span class="hint">Swipe to merge tiles</span>
+    <div class="btn-row">
+      <button id="btn-install">＋ Install</button>
+      <button id="btn-new">New Game</button>
+    </div>
+  </div>
+
+  <!-- Game board -->
+  <div class="board-wrap">
+    <div id="board">
+      <!-- 16 background cells -->
+      <div class="cell-bg"></div><div class="cell-bg"></div>
+      <div class="cell-bg"></div><div class="cell-bg"></div>
+      <div class="cell-bg"></div><div class="cell-bg"></div>
+      <div class="cell-bg"></div><div class="cell-bg"></div>
+      <div class="cell-bg"></div><div class="cell-bg"></div>
+      <div class="cell-bg"></div><div class="cell-bg"></div>
+      <div class="cell-bg"></div><div class="cell-bg"></div>
+      <div class="cell-bg"></div><div class="cell-bg"></div>
+
+      <!-- Tile layer (JS-managed) -->
+      <div id="tile-layer"></div>
+
+      <!-- Game over / win overlay -->
+      <div id="overlay">
+        <h2 id="overlay-title">Game Over</h2>
+        <p id="overlay-msg">No more moves!</p>
+        <button id="overlay-cta">Try Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom panel fills remaining space -->
+  <div class="bottom-panel">
+    <div class="how-to">
+      <div class="how-row"><span class="how-icon">👆</span><span>Swipe anywhere to move tiles</span></div>
+      <div class="how-row"><span class="how-icon">🔢</span><span>Merge matching tiles to reach <strong>2048</strong></span></div>
+      <div class="how-row"><span class="how-icon">🔄</span><span>Tap score ×5 to refresh cache</span></div>
+    </div>
+    <div class="tile-legend">
+      <div class="legend-tile" data-val="2">2</div>
+      <div class="legend-tile" data-val="4">4</div>
+      <div class="legend-tile" data-val="8">8</div>
+      <div class="legend-tile" data-val="16">16</div>
+      <div class="legend-tile" data-val="32">32</div>
+      <div class="legend-tile" data-val="64">64</div>
+      <div class="legend-tile" data-val="128">128</div>
+      <div class="legend-tile" data-val="2048">★</div>
+    </div>
+  </div>
+
+  <script>
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+  </script>
+  <script src="game.js"></script>
+</body>
+</html>
